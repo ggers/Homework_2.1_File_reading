@@ -28,19 +28,22 @@ def get_shop_list_by_dishes(dishes, person_count, cook_book):
 # Проверка для пересекающихся ингридиентов
             i_name = new_shop_list_item['ingridient_name']
             if i_name not in shop_list:
-                shop_list[i_name] = new_shop_list_item
+                ingredient_data = {k: new_shop_list_item[k] for k in ['measure', 'quantity']}
+                shop_list[new_shop_list_item['ingridient_name']] = ingredient_data
+            # старый вариант                shop_list[i_name] = new_shop_list_item
             else:
                 shop_list[i_name]['quantity'] += new_shop_list_item['quantity']
 # Уродливый цикл для удаления лишнего названия ингридиента
-    for i in shop_list.values():
-        del i['ingridient_name']
-    print("Наш итоговый список покупок в виде словаря\n", shop_list)
-    return shop_list
+#   for i in shop_list.values():
+#        del i['ingridient_name']
+#   print("Наш итоговый список покупок в виде словаря\n", shop_list)
+#   return shop_list
 
 def print_shop_list(shop_list):
     print("\nНаш итоговый список покупок:")
-    for key, value in shop_list.items():
-        print("{} {} {}".format(key, value['quantity'], value['measure']))
+    print(shop_list)
+#    for key, value in shop_list.items():
+#       print("{} {} {}".format(key, value['quantity'], value['measure']))
 
 def create_shop_list(database):
     person_count = int(input('Введите количество человек: '))
